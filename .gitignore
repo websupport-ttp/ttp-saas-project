@@ -1,0 +1,95 @@
+# Environment variables
+.env
+.env.local
+.env.*.local
+*.env
+
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Testing
+coverage/
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Kiro AI
+.kiro/
+.snapshots/
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+pnpm-debug.log*
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+tmp/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+env/
+
+# Database
+*.sqlite
+*.db
+
+# Secrets and credentials
+*.pem
+*.key
+*.cert
+secrets/
+credentials/
+
+# Test files (keep in scripts folder instead)
+test-*.js
+test-*.cjs
+test-*.html
+debug-*.js
+debug-*.cjs
+fix-*.bat
+fix-*.ps1
+*.bat
+query
+
+# Documentation (organized in docs folder)
+*_FIX.md
+*_GUIDE.md
+*_STATUS.md
+*_SUMMARY.md
+*_COMPLETE.md
+*_IMPLEMENTATION.md
+TROUBLESHOOTING.md
+QUICK_START.md
+START_HERE.md

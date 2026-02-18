@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clear Travel Insurance Cache</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 10px 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #b91c1c;
+        }
+        .success {
+            background: #10b981;
+            color: white;
+            padding: 10px;
+            border-radius: 6px;
+            margin: 10px 0;
+            display: none;
+        }
+        .info {
+            background: #3b82f6;
+            color: white;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+        .debug-info {
+            background: #f3f4f6;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+            font-family: monospace;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧹 Clear Travel Insurance Cache</h1>
+        <p>Use this tool to clear all cached data that might be causing issues with the travel insurance page.</p>
+        
+        <div class="info">
+            <strong>🚨 Current Issue:</strong> You're seeing mock quotes instead of the search form. This tool will help identify and fix the problem.
+        </div>
+
+        <div class="debug-info" id="debugInfo">
+            <strong>Current State:</strong><br>
+            Loading debug information...
+        </div>
+
+        <button onclick="clearLocalStorage()">Clear localStorage</button>
+        <button onclick="clearSessionStorage()">Clear sessionStorage</button>
+        <button onclick="clearAllCaches()">Clear All Caches</button>
+        <button onclick="showDebugInfo()">Show Debug Info</button>
+        
+        <div class="success" id="successMessage"></div>
+
+        <h3>🔧 Manual Steps:</h3>
+        <ol>
+            <li>Click "Clear All Caches" above</li>
+            <li>Hard refresh the page (Ctrl+Shift+R)</li>
+            <li>Go to: <a href="http://localhost:3000/travel-insurance" target="_blank">http://localhost:3000/travel-insurance</a></li>
+            <li>You should see the search form, not mock quotes</li>
+        </ol>
+
+        <h3>🧪 Test URLs:</h3>
+        <ul>
+            <li><a href="http://localhost:3000/travel-insurance" target="_blank">Search Form (no parameters)</a></li>
+            <li><a href="http://localhost:3000/travel-insurance?destination=United%20Kingdom&coverBegins=2026-02-15&coverEnds=2026-02-25&travelers=2%20travelers" target="_blank">Auto-populate (with parameters)</a></li>
+        </ul>
+
+        <h3>📋 What to Expect:</h3>
+        <ul>
+            <li><strong>No URL parameters:</strong> Should show search form</li>
+            <li><strong>With URL parameters:</strong> Should auto-populate form and search quotes</li>
+            <li><strong>Never:</strong> Should not show mock quotes without user action</li>
+        </ul>
+    </div>
+
+    <script>
+        function showMessage(text, isSuccess = true) {
+            const message = document.getElementById('successMessage');
+            message.textContent = text;
+            message.style.display = 'block';
+            message.style.background = isSuccess ? '#10b981' : '#dc2626';
+            setTimeout(() => {
+                message.style.display = 'none';
+            }, 3000);
+        }
+
+        function clearLocalStorage() {
+            try {
+                const keys = Object.keys(localStorage);
+                const travelKeys = keys.filter(key => 
+                    key.includes('insurance') || 
+                    key.includes('travel') || 
+                    key.includes('quote') ||
+                    key.includes('selectedInsuranceQuote') ||
+                    key.includes('insuranceSearchCriteria') ||
+                    key.includes('insuranceCustomerInfo')
+                );
+                
+                travelKeys.forEach(key => localStorage.removeItem(key));
+                
+                showMessage(`✅ Cleared ${travelKeys.length} localStorage items: ${travelKeys.join(', ')}`);
+                showDebugInfo();
+            } catch (error) {
+                showMessage(`❌ Error clearing localStorage: ${error.message}`, false);
+            }
+        }
+
+        function clearSessionStorage() {
+            try {
+                const keys = Object.keys(sessionStorage);
+                const travelKeys = keys.filter(key => 
+                    key.includes('insurance') || 
+                    key.includes('travel') || 
+                    key.includes('quote')
+                );
+                
+                travelKeys.forEach(key => sessionStorage.removeItem(key));
+                
+                showMessage(`✅ Cleared ${travelKeys.length} sessionStorage items: ${travelKeys.join(', ')}`);
+                showDebugInfo();
+            } catch (error) {
+                showMessage(`❌ Error clearing sessionStorage: ${error.message}`, false);
+            }
+        }
+
+        function clearAllCaches() {
+            try {
+                // Clear localStorage
+                const localKeys = Object.keys(localStorage);
+                const travelLocalKeys = localKeys.filter(key => 
+                    key.includes('insurance') || 
+                    key.includes('travel') || 
+                    key.includes('quote')
+                );
+                travelLocalKeys.forEach(key => localStorage.removeItem(key));
+
+                // Clear sessionStorage
+                const sessionKeys = Object.keys(sessionStorage);
+                const travelSessionKeys = sessionKeys.filter(key => 
+                    key.includes('insurance') || 
+                    key.includes('travel') || 
+                    key.includes('quote')
+                );
+                travelSessionKeys.forEach(key => sessionStorage.removeItem(key));
+
+                // Clear any cached service worker data if available
+                if ('caches' in window) {
+                    caches.keys().then(names => {
+                        names.forEach(name => {
+                            if (name.includes('travel') || name.includes('insurance')) {
+                                caches.delete(name);
+                            }
+                        });
+                    });
+                }
+
+                showMessage(`✅ Cleared all caches! localStorage: ${travelLocalKeys.length}, sessionStorage: ${travelSessionKeys.length}`);
+                showDebugInfo();
+            } catch (error) {
+                showMessage(`❌ Error clearing caches: ${error.message}`, false);
+            }
+        }
+
+        function showDebugInfo() {
+            const debugDiv = document.getElementById('debugInfo');
+            
+            // Check localStorage
+            const localKeys = Object.keys(localStorage);
+            const travelLocalKeys = localKeys.filter(key => 
+                key.includes('insurance') || 
+                key.includes('travel') || 
+                key.includes('quote')
+            );
+
+            // Check sessionStorage
+            const sessionKeys = Object.keys(sessionStorage);
+            const travelSessionKeys = sessionKeys.filter(key => 
+                key.includes('insurance') || 
+                key.includes('travel') || 
+                key.includes('quote')
+            );
+
+            // Check current URL
+            const currentUrl = window.location.href;
+            const urlParams = new URLSearchParams(window.location.search);
+
+            let debugInfo = `<strong>Current State:</strong><br>`;
+            debugInfo += `URL: ${currentUrl}<br>`;
+            debugInfo += `URL Parameters: ${urlParams.toString() || 'none'}<br>`;
+            debugInfo += `localStorage travel keys: ${travelLocalKeys.length} (${travelLocalKeys.join(', ') || 'none'})<br>`;
+            debugInfo += `sessionStorage travel keys: ${travelSessionKeys.length} (${travelSessionKeys.join(', ') || 'none'})<br>`;
+            
+            if (travelLocalKeys.length > 0) {
+                debugInfo += `<br><strong>localStorage Data:</strong><br>`;
+                travelLocalKeys.forEach(key => {
+                    const value = localStorage.getItem(key);
+                    debugInfo += `${key}: ${value ? value.substring(0, 100) + '...' : 'null'}<br>`;
+                });
+            }
+
+            debugDiv.innerHTML = debugInfo;
+        }
+
+        // Show debug info on page load
+        showDebugInfo();
+    </script>
+</body>
+</html>
