@@ -1,0 +1,41 @@
+═══════════════════════════════════════════════════════════════
+  COPY THESE 3 VARIABLES TO RAILWAY NOW
+═══════════════════════════════════════════════════════════════
+
+Go to: https://railway.app
+→ Select your backend project
+→ Click Variables tab
+→ Click "+ New Variable"
+→ Add these 3 variables:
+
+───────────────────────────────────────────────────────────────
+Variable 1:
+───────────────────────────────────────────────────────────────
+Name:  TERMII_API_KEY
+Value: TLfqBRIbxRUDKWDvWdUJjsTTwSPVypcxtvFwLrTbtmbLnEfueeATrXvduHEJNQ
+
+───────────────────────────────────────────────────────────────
+Variable 2:
+───────────────────────────────────────────────────────────────
+Name:  TERMII_BASE_URL
+Value: https://v3.api.termii.com
+
+───────────────────────────────────────────────────────────────
+Variable 3:
+───────────────────────────────────────────────────────────────
+Name:  TERMII_SENDER_ID
+Value: TravelPlace
+
+═══════════════════════════════════════════════════════════════
+
+After adding:
+✅ Railway will automatically restart your service
+✅ SMS will route to Termii for Nigerian numbers
+✅ You'll save 98.6% on SMS costs (₦2.50 vs ₦180)
+
+Test with:
+curl -X POST https://api.test.ttp.ng/api/v1/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"firstName":"Test","lastName":"User","email":"test@example.com","phoneNumber":"+2348012345678","password":"Test123!@#"}'
+
+═══════════════════════════════════════════════════════════════
