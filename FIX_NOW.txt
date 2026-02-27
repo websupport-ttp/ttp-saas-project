@@ -1,0 +1,54 @@
+═══════════════════════════════════════════════════════════════
+  FIX VERCEL API CONNECTION - DO THIS NOW
+═══════════════════════════════════════════════════════════════
+
+PROBLEM: Frontend trying to connect to localhost:8080 instead of 
+         https://api.test.ttp.ng
+
+SOLUTION: Update Vercel environment variable
+
+───────────────────────────────────────────────────────────────
+STEP 1: Go to Vercel
+───────────────────────────────────────────────────────────────
+https://vercel.com → Your Project → Settings → Environment Variables
+
+───────────────────────────────────────────────────────────────
+STEP 2: Find and Edit This Variable
+───────────────────────────────────────────────────────────────
+Variable Name: NEXT_PUBLIC_API_BASE_URL
+
+CURRENT (WRONG):
+https://api.test.ttp.ng
+
+CHANGE TO (CORRECT):
+https://api.test.ttp.ng/api/v1
+
+⚠️  IMPORTANT: Must include /api/v1 at the end!
+
+───────────────────────────────────────────────────────────────
+STEP 3: Save and Wait
+───────────────────────────────────────────────────────────────
+- Click Save
+- Vercel will automatically redeploy (~2 minutes)
+- Wait for deployment to complete
+
+───────────────────────────────────────────────────────────────
+STEP 4: Test
+───────────────────────────────────────────────────────────────
+1. Go to https://test.ttp.ng
+2. Search for a flight
+3. Should work without "Network error"!
+
+═══════════════════════════════════════════════════════════════
+
+WHY THIS FIXES IT:
+
+The frontend code expects the FULL API path:
+✅ https://api.test.ttp.ng/api/v1/products/flights/search
+
+NOT:
+❌ https://api.test.ttp.ng/products/flights/search
+
+The code does NOT add /api/v1 automatically!
+
+═══════════════════════════════════════════════════════════════
