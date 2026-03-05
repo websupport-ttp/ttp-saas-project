@@ -116,6 +116,7 @@ CHECK_*.md
 NEXTJS_*.md
 FLIGHT_*.md
 ENV_*.md
+FINAL-*.md
 *.txt
 deploy-*.ps1
 restart-*.ps1
