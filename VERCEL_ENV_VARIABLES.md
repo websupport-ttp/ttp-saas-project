@@ -26,7 +26,7 @@ When deploying to Vercel, you need to update these variables:
    - Current: `true`
    - Update to: `false` (for production)
 
-### ✅ KEEP AS IS (Already Correct)
+###  KEEP AS IS (Already Correct)
 
 - `NEXT_PUBLIC_SITE_NAME` - Already good
 - `NEXT_PUBLIC_SITE_DESCRIPTION` - Already good

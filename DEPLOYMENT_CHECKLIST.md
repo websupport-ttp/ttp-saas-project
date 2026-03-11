@@ -84,9 +84,9 @@ Use your Railway URL from Step 1:
 
 ```env
 NEXT_PUBLIC_SITE_NAME=The Travel Place
-NEXT_PUBLIC_SITE_URL=https://your-app.vercel.app
+NEXT_PUBLIC_SITE_URL=https://test.ttp.ng
 NEXT_PUBLIC_SITE_DESCRIPTION=Discover amazing destinations and plan your perfect trip with The Travel Place - your trusted travel companion for flights, hotels, visa applications, and travel insurance.
-NEXT_PUBLIC_API_BASE_URL=https://YOUR-RAILWAY-URL.up.railway.app/api/v1
+NEXT_PUBLIC_API_BASE_URL=https://test-api.ttp.ng/api/v1
 NEXT_PUBLIC_API_TIMEOUT=30000
 NEXT_PUBLIC_AUTH_COOKIE_NAME=ttp_auth_token
 NEXT_PUBLIC_REFRESH_TOKEN_NAME=ttp_refresh_token
